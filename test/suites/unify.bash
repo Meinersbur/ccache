@@ -41,7 +41,7 @@ EOF
 // unify.h
 int a1;
 // some lines that the preprocessor removes
-// when not emiting line directives (-P flag)
+// when not emitting line directives (-P flag)
 //
 // Note:
 // clang (without -fnormalize-whitespace)
