@@ -341,7 +341,7 @@ guess_compiler(string_view path)
   size_t clangdashpos = name.find("clang-");
   if (clangdashpos != nonstd::string_view::npos) {
     // Clang version 13 or later support the -fnormalize-whitespace flag.
-    char* EndPtr = 0;
+    char* EndPtr = nullptr;
     long clangversion = strtol(name.data() + 6, &EndPtr, 10);
     if (clangversion >= 13) {
       return CompilerType::clang_normalize_whitespace;
@@ -788,8 +788,9 @@ hash_depfiles(Context& ctx,
   // dependencies output.
   if (!ctx.included_pch_file.empty()) {
     std::string pch_path = Util::make_relative_path(ctx, ctx.included_pch_file);
-    if (pch_hash)
+    if (pch_hash) {
       pch_hash->hash(pch_path);
+    }
     remember_include_file(ctx, pch_path, pch_hash, false, nullptr);
   }
 
@@ -1149,8 +1150,9 @@ to_cache(Context& ctx,
 
       // Without run_second_cpp, diagnostics refer to the temporary file; fail
       // and run again using the original input to get usable diagnostics.
-      if (!ctx.config.run_second_cpp())
+      if (!ctx.config.run_second_cpp()) {
         throw Failure(Statistic::compiler_produced_stderr);
+      }
 
       // With run_second_cpp, the compiler diagnostic output is good for this
       // exact input, but imprecise for other unify mode matches. Include the
